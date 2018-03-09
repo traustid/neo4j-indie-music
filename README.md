@@ -122,6 +122,6 @@ Cypher can simplify networks by adding relations between nodes that have one nod
 ```cypher
 MATCH (g1:Group)<-[:ASSOCIATED_WITH]-(p:Person)-[:ASSOCIATED_WITH]->(g2:Group) WITH g1, collect(distinct g2) as gs UNWIND gs as g2 MERGE (g1)-[r:SHARE_MEMBERS]-(g2) RETURN g1, r, g2
 ```
-![The whole network simplified](https://raw.githubusercontent.com/traustid/neo4j-indie-music/9fc7884974317e9e0773fcd6ac6b65abb29d06a4/img/whole-network-simplified.png)
+![The whole network simplified](hhttps://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network-simplified.png?raw=true)
 
 This does give a different picture but I still like the previous version better, with all the band members included. This is quite dense and hard to read and what are bands without it's members anyways?
