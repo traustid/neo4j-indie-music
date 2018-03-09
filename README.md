@@ -125,3 +125,8 @@ MATCH (g1:Group)<-[:ASSOCIATED_WITH]-(p:Person)-[:ASSOCIATED_WITH]->(g2:Group) W
 ![The whole network simplified](https://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network-simplified.png)
 
 This does give a different picture but I still like the previous version better, with all the band members included. This is quite dense and hard to read and what are bands without it's members anyways?
+
+Flaws:
+- Selective, not automatic
+- Relationships can be of various types
+- Relationships are added without further research
