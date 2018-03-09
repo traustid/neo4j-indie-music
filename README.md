@@ -105,3 +105,8 @@ MATCH (a:Group {name: 'Tortoise' }),(b:Group { name: 'Godspeed You! Black Empero
 ![Shortest path between Tortoise and Godspeed You! Black Emperor](https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/godspeed-tortoise-relations.png)
 
 Here we see that both Charles Spearin and Brendan Canning are in the band Walley of Giants along with Sophie Trudeau which is also a member of Godspeed You! Black Emperor.
+
+We can attempt to see the whole network by retreiving all nodes 6 nodes away from both Tortoise and Godspeed You! Black Emperor:
+```cypher
+MATCH (a:Group)-[r*1..6]-(d) WHERE a.name = 'Tortoise' OR a.name = 'Godspeed You! Black Emperor' RETURN a, r, d
+```
