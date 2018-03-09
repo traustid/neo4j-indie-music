@@ -75,3 +75,14 @@ node indiemusic-import.js --login=neo4j:neo4j --input=input\indiemusic.json --ac
 ```
 
 The JavaScript file creates cypher queries for importing persons, groups and relationships between them. Once that is done we can start looking at the graph visualization using the Neo4j Browser.
+
+## Digging into the network
+
+First, lets get a graph with Tortoise as a center around it's members and other bands they might be associated with with a simple query:
+```cypher
+MATCH (n1:Group {name: 'Tortise'})-[r1]-(n2) OPTIONAL MATCH (n2)-[r2]-(n3) RETURN n1, r1, n2, r2, n3
+```
+
+```cypher
+MATCH (a:Group {name: 'Tortoise'})-[r:ASSOCIATED_WITH*1..3]-(d) RETURN a, r, d
+```
