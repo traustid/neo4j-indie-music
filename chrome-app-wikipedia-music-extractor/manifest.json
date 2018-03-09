@@ -1,0 +1,20 @@
+{
+	"manifest_version": 2,
+
+	"name": "Wikipedia music data extractor",
+	"description": "Get the data!",
+	"version": "1.0",
+
+	"permissions": [
+		"activeTab", 
+		"tabs",
+		"storage"
+	],
+
+	"content_scripts": [
+		{
+			"matches": ["*://*.wikipedia.org/*"],
+			"js": ["jquery.js", "app.js"]
+		}
+	]
+}
