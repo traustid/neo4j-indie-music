@@ -110,3 +110,8 @@ We can attempt to see the whole network by retreiving all nodes 6 nodes away fro
 ```cypher
 MATCH (a:Group)-[r*1..6]-(d) WHERE a.name = 'Tortoise' OR a.name = 'Godspeed You! Black Emperor' RETURN a, r, d
 ```
+![The whole Tortoise and Godspeed You! Black Emperor network](https://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network.png)
+
+This network illustrates four main clusters, which each of them centers around Tortoise, Broken Social Scene, Godspeed You! Black Emperor and surprisingly Sonic Youth!
+
+![The whole Tortoise and Godspeed You! Black Emperor network](https://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network-clusters.png)
