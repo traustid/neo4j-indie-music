@@ -51,6 +51,8 @@ The data that this extension finds is stored in an array which is then stored in
 ]
 ```
 
+Before going further I had to clean the data. For example: The Silver Mt. Zion goes by othen names like The Silver Mt. Zion Memorial Orchestra & Tra-La-La Band. To make sure that they only get one entity I simply uses find & replace in a text editor to normalize the name. I also looked for other things, for example text like "(singer)" attached to a persons name and removed those. Will Oldham also appeared in some cases as a band instead of a person. This cleaning took only few minutes.
+
 There are many ways of saving this data to a file, the way I did was to extent the `console` object in Google Chrome with a `save` method as introduced [here](http://bgrins.github.io/devtools-snippets/#console-save).
 Now I could write `console.save(JSON.parse(localStorage.getItem('wikipedia_music_data')))` in the console to save my data to a file.
 
@@ -61,7 +63,7 @@ Since we have the same names appearing over and over in our data, we want to mak
 
 ```
 CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE
-c
+CREATE CONSTRAINT ON (group:Group) ASSERT group.name IS UNIQUE
 ```
 
 In Neo4j, data consists of nodes which are connected by relationships. In our case, bands and band members are nodes. In the json output of the Wikipedia data, we have band members in one field (`name`) and band names in another (`related`). First we need to import all persons as type `Person` and all bands as another type which I choose to call `Group`. After that we need to add all relationships between persons and bands.
