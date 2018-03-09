@@ -1,4 +1,4 @@
-# Neo4j Music Network
+# Neo4j Indie Music Network
 ## My Music Discovery
 When I was younger I found this strange record store in Reykjavík which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to talk to a guy that worked there on the phone about music and after each talk he sent me few records via snailmail.
 I got to know many great bands and artists like Tortoise, Slint, Do Make Say Think, Papa M, Will Oldham and Godspeed You! Black Emperor which made me redefine music in my mmind. Then I discovered that members of Godspeed were in other bands to and that some members of Tortoise were also in Slint and even more bands. And how many bands were David Pajo associated with anyway? 
