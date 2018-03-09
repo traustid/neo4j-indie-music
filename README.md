@@ -78,11 +78,24 @@ The JavaScript file creates cypher queries for importing persons, groups and rel
 
 ## Digging into the network
 
-First, lets get a graph with Tortoise as a center around it's members and other bands they might be associated with with a simple query:
+First, we might get a graph with Tortoise as a center around it's members and other bands they might be associated with with a simple query:
 ```cypher
 MATCH (n1:Group {name: 'Tortise'})-[r1]-(n2) OPTIONAL MATCH (n2)-[r2]-(n3) RETURN n1, r1, n2, r2, n3
 ```
-
+I however think it's more interesting to dig a little deeper and luckily, cypher gives us the option of selecting how many related nodes we want to receive and visualize from a given node:
 ```cypher
 MATCH (a:Group {name: 'Tortoise'})-[r:ASSOCIATED_WITH*1..3]-(d) RETURN a, r, d
 ```
+Here we get quite an interesting network. On the picture I have selected Tortoise in the center. One of Tortoise member is David Pajo which on the graph is show associated with 9 other bands. We also see that not so far away from Tortoise are bands like Yeah yeah yeas, Eleventh Dream Day and The Sea and Cake, most of them American and from an area not that far away from Chicago.
+```cypher
+MATCH (a:Group {name: 'Godspeed You! Black Emperor'})-[r:ASSOCIATED_WITH*1..3]-(d) RETURN a, r, d
+```
+The network three nodes away from Godspeed You! Black Emperor also gives a picture that is familiar, yet with a lot of new names. There are bands like Set Fire to Flames, A Silver Mt. Zion, HRSTA and Molasses.
+
+Looking closely into these two networks, around Tortoise and Godspeed You! Black Emperor we find two names that appear on both of them, Charles Spearin and Brendan Canning. Spearin is a founding member of the canadian band Do Make Say Think and he's also a member of Broken Social Scene, which appeared in the Tortoise graph, and Canning is also a member of Broken Social Scene. Here we seem to have a connection between Tortoise and Godspeed You! Black Emperor.
+
+To check this out for real we can use cypher's `allShortestPaths` method to get shortest path between two nodes:
+```cypher
+MATCH (a:Group {name: 'Tortoise' }),(b:Group { name: 'Godspeed You! Black Emperor'}), p = allShortestPaths((a)-[*]-(b)) RETURN p
+```
+Here we see that both Charles Spearin and Brendan Canning are in the band Walley of Giants along with Sophie Trudeau which is also a member of Godspeed You! Black Emperor.
