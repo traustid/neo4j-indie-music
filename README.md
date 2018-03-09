@@ -114,10 +114,14 @@ MATCH (a:Group)-[r*1..6]-(d) WHERE a.name = 'Tortoise' OR a.name = 'Godspeed You
 
 This network illustrates four main clusters, which each of them centers around Tortoise, Broken Social Scene, Godspeed You! Black Emperor and surprisingly Sonic Youth!
 
-![The whole Tortoise and Godspeed You! Black Emperor network](https://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network-clusters.png)
+![The whole Tortoise and Godspeed You! Black Emperor network](https://raw.githubusercontent.com/traustid/neo4j-indie-music/9fc7884974317e9e0773fcd6ac6b65abb29d06a4/img/whole-network-clusters.png)
 
-## Making it simpler
+## Making it simpler doesn't always make things simpler
 
+Cypher can simplify networks by adding relations between nodes that have one node in between. In this case we can visualize a network without the people and with direct relationships between bands. To do this we use the `UNWIND` method of Cypher:
 ```cypher
 MATCH (g1:Group)<-[:ASSOCIATED_WITH]-(p:Person)-[:ASSOCIATED_WITH]->(g2:Group) WITH g1, collect(distinct g2) as gs UNWIND gs as g2 MERGE (g1)-[r:SHARE_MEMBERS]-(g2) RETURN g1, r, g2
 ```
+![The whole network simplified](https://raw.githubusercontent.com/traustid/neo4j-indie-music/9fc7884974317e9e0773fcd6ac6b65abb29d06a4/img/whole-network-simplified.png)
+
+This does give a different picture but I still like the previous version better, with all the band members included. This is quite dense and hard to read and what are bands without it's members anyways?
