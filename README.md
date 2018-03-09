@@ -21,7 +21,9 @@ Wikipedia contains articles about nearly all the bands that I'm interested in an
 ![Screenshot of https://en.wikipedia.org/wiki/Do_Make_Say_Think](https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/wikipedia-do-make-say-think.png)
 
 On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have a menu with a class `infobox vcard` and in that menu we have the heading "members" followed by a list of names. This information makes it quite easy to simply use jQuery to find data on the page.
+
 For extracting data I created a small Google Chrome extension. It looks for information about "Members" for a band page or "Associated acts" for a member page. If the extension finds a members list, it assumes that we are looking at a band page but if it only finds a "associated acts" section, it assumes that we are looking at a page about a musician.
+
 The data that this extension finds is stored in an array which is then stored in the `localStorage` in the browser in a keyName `wikipedia_music_data`. The extension extracts data after page load so to collect all the data I wanted I simply went to the Tortoise page and then clicked all links to members and associated acts that I found on all relevant pages, that didn't take that long time and I did want to be selective and not automatically extract everything. I started with Tortoise and Godpseed You! Black Emperor and worked my way clicking through a whole lot of pages. In the end I had an array with 581 items, structured like this, band members are stored in the `name` field and related bands in the `related` field:
 
 ```json
@@ -53,9 +55,20 @@ There are many ways of saving this data to a file, the way I did was to extent t
 Now I could write `console.save(JSON.parse(localStorage.getItem('wikipedia_music_data')))` in the console to save my data to a file.
 
 ## Importing Data to Neo4j
-Neo4j is a graph database specially built to handle and visualize network data, so it was the perfect tool for the job. In Neo4j, data consists of nodes which are connected by relationships. In our case, bands and band members are nodes. In the json output of the Wikipedia data, we have band members in one field (`name`) and band names in another (`related`). First we need to import all persons as type `Person` and all bands as another type which I choose to call `Group`. After that we need to add all relationships between persons and bands.
+Neo4j is a graph database specially built to handle and visualize network data, so it was the perfect tool for the job. So to being able to test you must first install Neo4j and create an empty database for our data.
+
+Since we have the same names appearing over and over in our data, we want to make sure that each name can only be stored once. If we were to work with much bigger data we might have a problem with persons having the same name but given that this dataset is quite small I didn't consider this to be a problem. To ensure that each name can only be stored once we need to create a constraint using Cypher in the Neo4j browser:
+
+```
+CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE
+CREATE CONSTRAINT ON (group:Group) ASSERT group.name IS UNIQUE
+```
+
+In Neo4j, data consists of nodes which are connected by relationships. In our case, bands and band members are nodes. In the json output of the Wikipedia data, we have band members in one field (`name`) and band names in another (`related`). First we need to import all persons as type `Person` and all bands as another type which I choose to call `Group`. After that we need to add all relationships between persons and bands.
+
 To do this I created a small JavasScript tool. This script takes in as argument an input type and a action parameter which can be either `entities` or `relations`. First we need to run it with the `entities` parameter to import all nodes and then import all the relationships using `relations`.
 ```
 node indiemusic-import.js input\indiemusic.json entities
 node indiemusic-import.js input\indiemusic.json relations
 ```
+
