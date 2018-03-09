@@ -61,7 +61,7 @@ Since we have the same names appearing over and over in our data, we want to mak
 
 ```
 CREATE CONSTRAINT ON (person:Person) ASSERT person.name IS UNIQUE
-CREATE CONSTRAINT ON (group:Group) ASSERT group.name IS UNIQUE
+c
 ```
 
 In Neo4j, data consists of nodes which are connected by relationships. In our case, bands and band members are nodes. In the json output of the Wikipedia data, we have band members in one field (`name`) and band names in another (`related`). First we need to import all persons as type `Person` and all bands as another type which I choose to call `Group`. After that we need to add all relationships between persons and bands.
