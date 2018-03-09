@@ -6,6 +6,8 @@ What was in the water in Chicago and Montreal?
 
 I realised that the music scene was a complex network of cooperation between a lot of great musicians, and I started reading about various bands but I alswe wanted to see a bigger picture.
 
+And the main question was: are there connections between the people associated with Tortoise and Godspeed You! Black Emperor?
+
 ## The Big Picture
 
 Luckily we have a lot of data about musicians on the web and we have tools like Neo4j to do exacly what I wanted to to: see the big picture. So I created a set of tools to enable me to:
