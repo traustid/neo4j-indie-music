@@ -66,9 +66,10 @@ c
 
 In Neo4j, data consists of nodes which are connected by relationships. In our case, bands and band members are nodes. In the json output of the Wikipedia data, we have band members in one field (`name`) and band names in another (`related`). First we need to import all persons as type `Person` and all bands as another type which I choose to call `Group`. After that we need to add all relationships between persons and bands.
 
-To do this I created a small JavasScript tool. This script takes in as argument an input type and a action parameter which can be either `entities` or `relations`. First we need to run it with the `entities` parameter to import all nodes and then import all the relationships using `relations`.
+To do this I created a small JavasScript tool. This script takes in as argument an input file and an action parameter which can be either `nodes` or `relationships`. First we need to run it with the `nodes` parameter to import all nodes and then import all the relationships using `relationships`.
 ```
-node indiemusic-import.js input\indiemusic.json entities
-node indiemusic-import.js input\indiemusic.json relations
+node indiemusic-import.js --login=neo4j:neo4j --input=input\indiemusic.json --action=nodes
+node indiemusic-import.js --login=neo4j:neo4j --input=input\indiemusic.json --action=relationships
 ```
 
+The JavaScript file creates right queries
