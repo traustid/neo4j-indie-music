@@ -15,5 +15,7 @@ Luckily we have a lot of data about musicians on the web and we have tools like 
 ### Extracting Wikipedia Data
 
 Wikipedia contains articles about nearly all the bands that I'm interested in and it's members. By looking at one sample page, the one about [Do Make Say Think](https://en.wikipedia.org/wiki/Do_Make_Say_Think) one will see that it's structured in quite a good way for extracting relevant data
-![Screenshot of https://en.wikipedia.org/wiki/Do_Make_Say_Think(https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/wikipedia-do-make-say-think.png)
+
+![Screenshot of https://en.wikipedia.org/wiki/Do_Make_Say_Think](https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/wikipedia-do-make-say-think.png)
+
 On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have 
