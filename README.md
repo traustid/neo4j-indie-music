@@ -18,4 +18,39 @@ Wikipedia contains articles about nearly all the bands that I'm interested in an
 
 ![Screenshot of https://en.wikipedia.org/wiki/Do_Make_Say_Think](https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/wikipedia-do-make-say-think.png)
 
-On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have 
+On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have a menu with a class `infobox vcard` and in that menu we have the heading "members" followed by a list of names. This information makes it quite easy to simply use jQuery to find data on the page.
+For extracting data I created a small Google Chrome extension. It looks for information about "Members" for a band page or "Associated acts" for a member page. If the extension finds a members list, it assumes that we are looking at a band page but if it only finds a "associated acts" section, it assumes that we are looking at a page about a musician.
+The data that this extension finds is stored in an array which is then stored in the `localStorage` in the browser. The extension extracts data after page load so to collect all the data I wanted I simply went to the Tortoise page and then clicked all links to members and associated acts that I found on all relevant pages, that didn't take that long time but.
+
+```json
+[
+    {
+        "name": "Doug McCombs",
+        "related": "Pullman"
+    },
+    {
+        "name": "Tim Barnes",
+        "related": "Pullman"
+    },
+    {
+        "name": "Doug McCombs",
+        "related": "Tortoise"
+    },
+    {
+        "name": "Doug McCombs",
+        "related": "Brokeback"
+    },
+    {
+        "name": "Doug McCombs",
+        "related": "Pullman"
+    },
+    {
+        "name": "Dan Bitney",
+        "related": "Tortoise"
+    },
+    {
+        "name": "Doug McCombs",
+        "related": "Tortoise"
+    }
+]
+```
