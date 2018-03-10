@@ -3,18 +3,16 @@ var _ = require('underscore');
 var fetch = require('node-fetch');
 var fs = require('fs');
 
-if (process.argv.length < 5) {
-	console.log('node indiemusic-import.js --input=[input json] --login=[user:password] --action=[nodes|relationships]');
+var cypherUrl = 'http://[login]localhost:7474/db/data/cypher';
 
-	return;
+var action = process.argv[3];
+
+if (process.argv.length > 4) {
+	console.log('node neo4j-import [input json] [entities|relations]')
 }
 
-var argv = require('minimist')(process.argv.slice(2));
-
-var cypherUrl = 'http://'+argv.login+'@localhost:7474/db/data/cypher';
-
-if (argv.action == 'nodes') {
-	fs.readFile(argv.input, 'utf8', function (err, fileData) {
+if (action == 'entities') {
+	fs.readFile(process.argv[2], 'utf8', function (err, fileData) {
 		if (err) throw err;
 
 		var output = [];
@@ -54,8 +52,8 @@ if (argv.action == 'nodes') {
 	});
 }
 
-if (argv.action == 'relationships') {
-	fs.readFile(argv.input, 'utf8', function (err, fileData) {
+if (action == 'relations') {
+	fs.readFile(process.argv[2], 'utf8', function (err, fileData) {
 		if (err) throw err;
 
 		var output = [];
