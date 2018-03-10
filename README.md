@@ -1,6 +1,6 @@
 # Neo4j Indie Music Network
 ## My Music Discovery
-When I was younger I found this strange record store in Reykjavík which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to chat on the phone with one of the guys that worked there and after each talk he sent me few records via snailmail.
+When I was younger I found this strange [record store in Reykjavík](https://en.wikipedia.org/wiki/Hlj%C3%B3malind) which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to chat on the phone with one of the guys that worked there and after each talk he sent me few records via snailmail.
 I got to know many great bands and artists like [Tortoise](https://en.wikipedia.org/wiki/Tortoise_(band)), [Slint](https://en.wikipedia.org/wiki/Slint), [Do Make Say Think](https://en.wikipedia.org/wiki/Do_Make_Say_Think), [Papa M](https://en.wikipedia.org/wiki/David_Pajo), [Will Oldham](https://en.wikipedia.org/wiki/Will_Oldham) and [Godspeed You! Black Emperor](https://en.wikipedia.org/wiki/Godspeed_You!_Black_Emperor) (which made me redefine music in my mmind). I discovered that members of Godspeed were in other bands to and that some members of Tortoise were also in Slint and even more bands. And how many bands were David Pajo associated with anyway? 
 What was in the drinking water in Chicago and Montreal?
 
