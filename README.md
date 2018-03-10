@@ -1,6 +1,6 @@
 # Neo4j Indie Music Network
 
-!(https://github.com/traustid/neo4j-indie-music/blob/master/img/network-splash.png)
+![Network graph](https://github.com/traustid/neo4j-indie-music/blob/master/img/network-splash.png)
 
 ## My Music Discovery
 When I was younger I found this strange [record store in Reykjavík](https://en.wikipedia.org/wiki/Hlj%C3%B3malind) which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to chat on the phone with one of the guys that worked there and after each talk he sent me few records via snailmail.
