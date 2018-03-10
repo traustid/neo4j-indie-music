@@ -1,17 +1,17 @@
 # Neo4j Indie Music Network
 ## My Music Discovery
-When I was younger I found this strange record store in Reykjavík which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to talk to a guy that worked there on the phone about music and after each talk he sent me few records via snailmail.
-I got to know many great bands and artists like Tortoise, Slint, Do Make Say Think, Papa M, Will Oldham and Godspeed You! Black Emperor which made me redefine music in my mmind. Then I discovered that members of Godspeed were in other bands to and that some members of Tortoise were also in Slint and even more bands. And how many bands were David Pajo associated with anyway? 
+When I was younger I found this strange record store in Reykjavík which blew my mind. All this new and exciting music! Since I lived a bit far away the city I used to chat on the phone with one of the guys that worked there and after each talk he sent me few records via snailmail.
+I got to know many great bands and artists like Tortoise, Slint, Do Make Say Think, Papa M, Will Oldham and Godspeed You! Black Emperor (which made me redefine music in my mmind). I discovered that members of Godspeed were in other bands to and that some members of Tortoise were also in Slint and even more bands. And how many bands were David Pajo associated with anyway? 
 What was in the drinking water in Chicago and Montreal?
 
-I realised that the music scene was a complex network of cooperation between a lot of great musicians, and I started reading about various bands but I also wanted to see a bigger picture.
+I realised that the music scene was a complex network of cooperation between a lot of great musicians so I started reading about various bands but I also wanted to see a bigger picture.
 
-And the main question was: are there connections between the people associated with Tortoise and Godspeed You! Black Emperor?
+And one of the questions were: are there connections between the people associated with Tortoise and Godspeed You! Black Emperor?
 
 ## The Big Picture
 
-Luckily we have a lot of data about musicians on the web and we have tools like Neo4j to do exacly what I wanted to to: see the big picture. So I created a set of tools to enable me to:
-- Collect data about bands and band members
+Luckily we have a lot of data about musicians on the web and we have great tools like Neo4j to do exacly what I wanted to to: see the big picture. So I created a set of tools to enable me to:
+- Collect data about bands and band members, making it a little simpler that manually copying and pasting
 - Import the data into a graph database (Neo4j) for visualizing relations between band members
 
 ## Extracting Wikipedia Data
@@ -20,12 +20,13 @@ Wikipedia contains articles about nearly all the bands that I'm interested in an
 
 ![Screenshot of https://en.wikipedia.org/wiki/Do_Make_Say_Think](https://raw.githubusercontent.com/traustid/neo4j-indie-music/master/img/wikipedia-do-make-say-think.png)
 
-On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have a menu with a class `infobox vcard` and in that menu we have the heading "members" followed by a list of names. This information makes it quite easy to simply use jQuery to find data on the page.
+On the top we have the title of the page, a `h1` element with class `firstHeading`. On the right we have a table with the class `infobox vcard` and in that table we have the heading "members" followed by a list of names. This information makes it quite easy to simply use jQuery to find data on the page.
 
-For extracting data I created a small Google Chrome extension. It looks for information about "Members" for a band page or "Associated acts" for a member page. If the extension finds a members list, it assumes that we are looking at a band page but if it only finds a "associated acts" section, it assumes that we are looking at a page about a musician.
+For extracting data I created a small Google Chrome extension. It looks for a list of names following a table heading containing the text "Members" for a band page or "Associated acts" for a musician page. If the extension finds a members list, it assumes that we are looking at a band page but if it only finds a "associated acts" section, it assumes that we are looking at a page about a musician. I most cases this works well although some data cleaning is required, I'll get to that later.
 
-The data that this extension finds is stored in an array which is then stored in the `localStorage` in the browser in a keyName `wikipedia_music_data`. The extension extracts data after page load so to collect all the data I wanted I simply went to the Tortoise page and then clicked all links to members and associated acts that I found on all relevant pages, that didn't take that long time and I did want to be selective and not automatically extract everything. I started with Tortoise and Godpseed You! Black Emperor and worked my way clicking through a whole lot of pages. In the end I had an array with 581 items, structured like this, band members are stored in the `name` field and related bands in the `related` field:
+The data that this extension finds is stored in an array which is then stored in the `localStorage` object in the browser in a key named `wikipedia_music_data`. The extension extracts data after page load so to collect all the data I wanted I simply went to a Wikipedia page abut a band and then clicked all links to members and associated acts that I found on all relevant pages. One might question this method since it doesn't sound that automated. This however didn't take that long time and I did want to be selective and not automatically extract everything although I might try to do that later at some point! I started with Tortoise and Godpseed You! Black Emperor and worked my way clicking through a whole lot of pages. I also clicked on a lot of links starting with pages about bands like Galaxy 500, Built To Spill, The Flaming Lips and Slowdive, to see if we could find connections there to the Tortois/Godspeed network. In the end I had an array with about 1000 items.
 
+The data is structured like this, band members are stored in the `name` field and related bands in the `related` field:
 ```json
 [
     {
@@ -51,13 +52,14 @@ The data that this extension finds is stored in an array which is then stored in
 ]
 ```
 
-Before going further I had to clean the data. For example: The Silver Mt. Zion goes by othen names like The Silver Mt. Zion Memorial Orchestra & Tra-La-La Band. To make sure that they only get one entity I simply uses find & replace in a text editor to normalize the name. I also looked for other things, for example text like "(singer)" attached to a persons name and removed those. Will Oldham also appeared in some cases as a band instead of a person. This cleaning took only few minutes.
+Before going further I had to clean the data a bit. For example: The Silver Mt. Zion goes by othen names like The Silver Mt. Zion Memorial Orchestra & Tra-La-La Band. To make sure that they only got one entity I simply used find & replace in a text editor to normalize the name. I also looked for other things, for example text like "(singer)" which sometimes was attached to a persons name and removed those. Will Oldham also appeared in some cases as a band instead of a person. This cleaning took only few minutes.
 
-There are many ways of saving this data to a file, the way I did was to extent the `console` object in Google Chrome with a `save` method as introduced [here](http://bgrins.github.io/devtools-snippets/#console-save).
+## Saving the Data
+There are many ways of saving this data from the `localStorage` object to a file, the way I did was to extent the `console` object in Google Chrome with a `save` method as introduced [here](http://bgrins.github.io/devtools-snippets/#console-save).
 Now I could write `console.save(JSON.parse(localStorage.getItem('wikipedia_music_data')))` in the console to save my data to a file.
 
 ## Importing Data to Neo4j
-Neo4j is a graph database specially built to handle and visualize network data, so it was the perfect tool for the job. So to being able to test you must first install Neo4j and create an empty database for our data.
+Neo4j is a graph database specially built to handle and visualize network data, so it was the perfect tool for the job. To be able to test you must first download and install Neo4j and create an empty database for our data.
 
 Since we have the same names appearing over and over in our data, we want to make sure that each name can only be stored once. If we were to work with much bigger data we might have a problem with persons having the same name but given that this dataset is quite small I didn't consider this to be a problem. To ensure that each name can only be stored once we need to create a constraint using Cypher in the Neo4j browser:
 
