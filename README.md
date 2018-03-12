@@ -127,7 +127,7 @@ MATCH (a:Group)-[r*1..6]-(d) WHERE a.name = 'Tortoise' OR a.name = 'Godspeed You
 ```
 ![The whole Tortoise and Godspeed You! Black Emperor network](https://github.com/traustid/neo4j-indie-music/blob/master/img/whole-network.png)
 
-This network illustrates four main clusters, which each of them centers around Tortoise, Broken Social Scene, Godspeed You! Black Emperor and then [Wilco](https://en.wikipedia.org/wiki/Wilco) and [Sonic Youth](https://en.wikipedia.org/wiki/Sonic_Youth)!
+This network illustrates four main clusters, each of which centers around Tortoise, Broken Social Scene, Godspeed You! Black Emperor and then [Wilco](https://en.wikipedia.org/wiki/Wilco) and [Sonic Youth](https://en.wikipedia.org/wiki/Sonic_Youth)!
 
 ![The whole Tortoise and Godspeed You! Black Emperor network](https://raw.githubusercontent.com/traustid/neo4j-indie-music/9fc7884974317e9e0773fcd6ac6b65abb29d06a4/img/whole-network-clusters.png)
 
